@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Results</h2>
+<table border="1" cellpadding="6">
+  <thead><tr><th>Test</th><th>Student</th><th>Answer</th><th>Score</th><th>Submitted</th></tr></thead>
+  <tbody>
+    {% for s in submissions %}
+      <tr>
+        <td>{{ s.test.title }}</td>
+        <td>{{ s.student.username }}</td>
+        <td>{{ s.answer }}</td>
+        <td>{{ s.score }}</td>
+        <td>{{ s.submitted_at }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No submissions</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

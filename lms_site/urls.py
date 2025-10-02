@@ -1,13 +1,9 @@
 from django.contrib import admin
-from django.urls import path
-from courses import views
-from assessments.views import take_test
+from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('login/', views.user_login, name='login'),
-    path('teacher/dashboard/', views.teacher_dashboard, name='teacher_dashboard'),
-    path('student/dashboard/', views.student_dashboard, name='student_dashboard'),
-    path('test/<int:test_id>/', take_test, name='take_test'),
+    path("admin/", admin.site.urls),
+    path("", include("courses.urls")),           # homepage + dashboards
+    path("accounts/", include("accounts.urls")), # login, logout, register
+    path("assessments/", include("assessments.urls")),
 ]

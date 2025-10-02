@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Student Dashboard</h2>
+    <p>Welcome, {{ user.username }}!</p>
+
+    <h3>Available Lessons</h3>
+    {% if lessons %}
+        <ul>
+            {% for lesson in lessons %}
+                <li>
+                    <strong>{{ lesson.title }}</strong> - 
+                    <a href="{% url 'courses:lesson_detail' lesson.id %}">View</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No lessons available at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

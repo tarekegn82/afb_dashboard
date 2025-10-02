@@ -1,30 +1,41 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Course, Lesson
+from django.contrib.auth.decorators import login_required
+from .forms import LessonForm
 from django.contrib import messages
-from .models import Lesson
 
 def home(request):
-    return render(request, 'courses/home.html')
+    courses = Course.objects.all()
+    return render(request, 'courses/home.html', {'courses': courses})
 
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if user.is_staff:
-                return redirect("teacher_dashboard")
-            else:
-                return redirect("student_dashboard")
-        else:
-            messages.error(request, "Invalid username or password")
-    return render(request, "courses/login.html")
-
+@login_required
 def teacher_dashboard(request):
-    lessons = Lesson.objects.filter(teacher=request.user)
-    return render(request, 'courses/teacher_dashboard.html', {'lessons': lessons})
+    # ensure teacher role
+    if not hasattr(request.user, 'profile') or request.user.profile.role != 'teacher':
+        return redirect('courses:student_dashboard')
+    courses = Course.objects.filter(teacher=request.user)
+    return render(request, 'courses/teacher_dashboard.html', {'courses': courses})
 
+@login_required
 def student_dashboard(request):
-    lessons = Lesson.objects.all()
+    # show available lessons from all courses or enrolled ones (simple case: all)
+    lessons = Lesson.objects.select_related('course').all()
     return render(request, 'courses/student_dashboard.html', {'lessons': lessons})
+
+@login_required
+def create_lesson(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if request.user.profile.role != 'teacher' or course.teacher != request.user:
+        messages.error(request, 'Not allowed')
+        return redirect('courses:teacher_dashboard')
+    if request.method == 'POST':
+        form = LessonForm(request.POST)
+        if form.is_valid():
+            lesson = form.save(commit=False)
+            lesson.course = course
+            lesson.save()
+            messages.success(request, 'Lesson created.')
+            return redirect('courses:teacher_dashboard')
+    else:
+        form = LessonForm()
+    return render(request, 'courses/create_lesson.html', {'form': form, 'course': course})

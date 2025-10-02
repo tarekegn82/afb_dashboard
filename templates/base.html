@@ -1,11 +1,118 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>LMS</title>
+    <meta charset="UTF-8">
+    <title>LMS</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f8ff; /* lightblue background */
+            color: #333;
+        }
+        header {
+            background-color: #6a5acd; /* purple header */
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav {
+            background-color: #add8e6; /* lightblue nav */
+            padding: 10px 20px;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #6a5acd; /* purple hover */
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #6a5acd;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .button {
+            background-color: #6a5acd;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #483d8b;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .messages {
+            margin-bottom: 15px;
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<h1>Learning Management System</h1>
-<hr>
-{% block content %}{% endblock %}
+    <header>
+        Learning Management System
+    </header>
+    <nav>
+        <a href="{% url 'courses:home' %}">Home</a> |
+
+        {% if user.is_authenticated %}
+            Hello {{ user.username }} |
+
+            {% if user.profile.role == 'teacher' %}
+                <a href="{% url 'courses:teacher_dashboard' %}">Teacher Dashboard</a> |
+            {% elif user.profile.role == 'student' %}
+                <a href="{% url 'courses:student_dashboard' %}">Student Dashboard</a> |
+            {% endif %}
+
+            <a href="{% url 'accounts:logout' %}">Logout</a> |
+            <a href="{% url 'assessments:results' %}">Results</a>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">Login</a> |
+            <a href="{% url 'accounts:register' %}">Register</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        © 2025 My LMS | Built with Django
+    </footer>
 </body>
 </html>
