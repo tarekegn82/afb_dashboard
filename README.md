@@ -7,12 +7,7 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
 ## Table of Contents
 
 - [Features](#features)
-- [Technologies](#technologies)
-- [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
+
 - [License](#license)
 
 ---
