@@ -6,4 +6,6 @@ urlpatterns = [
     path("", include("courses.urls")),           # homepage + dashboards
     path("accounts/", include("accounts.urls")), # login, logout, register
     path("assessments/", include("assessments.urls")),
+    
+
 ]

@@ -10,11 +10,11 @@ def home(request):
 
 @login_required
 def teacher_dashboard(request):
-    # ensure teacher role
-    if not hasattr(request.user, 'profile') or request.user.profile.role != 'teacher':
-        return redirect('courses:student_dashboard')
+    # All lessons by this teacher
+    lessons = Lesson.objects.filter(teacher=request.user)
+    # Courses assigned to this teacher
     courses = Course.objects.filter(teacher=request.user)
-    return render(request, 'courses/teacher_dashboard.html', {'courses': courses})
+    return render(request, 'courses/teacher_dashboard.html', {'lessons': lessons, 'courses': courses})
 
 @login_required
 def student_dashboard(request):
@@ -39,3 +39,11 @@ def create_lesson(request, course_id):
     else:
         form = LessonForm()
     return render(request, 'courses/create_lesson.html', {'form': form, 'course': course})
+from django.shortcuts import render, get_object_or_404
+from .models import Lesson
+
+@login_required
+def lesson_detail(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    return render(request, 'courses/lesson_detail.html', {'lesson': lesson})
+

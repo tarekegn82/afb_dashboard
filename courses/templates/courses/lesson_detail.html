@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="lesson-detail">
+    <h1 style="color: #4B0082; border-bottom: 2px solid #ADD8E6; padding-bottom: 5px;">
+        {{ lesson.title }}
+    </h1>
+
+    <p style="font-size: 1.1em; line-height: 1.6; margin-top: 15px;">
+        {{ lesson.content|linebreaks }}
+    </p>
+
+    <p style="margin-top: 20px; color: #555;">
+        <strong>Course:</strong> {{ lesson.course.title }}<br>
+        <strong>Teacher:</strong> {{ lesson.teacher.username }}<br>
+        <strong>Created at:</strong> {{ lesson.created_at|date:"F d, Y H:i" }}
+    </p>
+
+    <a href="{% url 'courses:student_dashboard' %}" class="button" 
+       style="display: inline-block; margin-top: 20px; padding: 10px 15px; 
+              background-color: #4B0082; color: #fff; border-radius: 5px; text-decoration: none;">
+        Back to Dashboard
+    </a>
+</div>
+{% endblock %}
