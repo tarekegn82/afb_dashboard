@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align:center; margin-top:50px;">
+    <h1>Welcome to the Learning Management System</h1>
+    <p>This is the homepage.</p>
+    <a href="{% url 'login' %}" style="padding:10px 20px; background:#007bff; color:white; text-decoration:none; border-radius:5px;">
+        Go to Login
+    </a>
+</div>
+{% endblock %}
