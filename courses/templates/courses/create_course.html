@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create New Course</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Course Title:</label><br>
+    <input type="text" id="title" name="title" required style="width: 50%;"><br><br>
+
+    <label for="description">Course Description:</label><br>
+    <textarea id="description" name="description" rows="5" style="width: 50%;" required></textarea><br><br>
+
+    <button type="submit" class="button">Create Course</button>
+</form>
+
+<p><a href="{% url 'courses:teacher_dashboard' %}">Back to Dashboard</a></p>
+{% endblock %}

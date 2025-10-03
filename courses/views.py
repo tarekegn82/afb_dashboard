@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Course, Lesson
-from django.contrib.auth.decorators import login_required
 from .forms import LessonForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 def home(request):
@@ -10,40 +10,61 @@ def home(request):
 
 @login_required
 def teacher_dashboard(request):
-    # All lessons by this teacher
-    lessons = Lesson.objects.filter(teacher=request.user)
-    # Courses assigned to this teacher
+    # Courses created by this teacher
     courses = Course.objects.filter(teacher=request.user)
-    return render(request, 'courses/teacher_dashboard.html', {'lessons': lessons, 'courses': courses})
+    # Lessons from those courses
+    lessons = Lesson.objects.filter(course__in=courses)
+    return render(request, 'courses/teacher_dashboard.html', {
+        'courses': courses,
+        'lessons': lessons
+    })
 
 @login_required
 def student_dashboard(request):
-    # show available lessons from all courses or enrolled ones (simple case: all)
+    # Show all lessons (or filter by enrolled courses if implemented)
     lessons = Lesson.objects.select_related('course').all()
     return render(request, 'courses/student_dashboard.html', {'lessons': lessons})
 
 @login_required
 def create_lesson(request, course_id):
     course = get_object_or_404(Course, id=course_id)
+    # Only the teacher who owns this course can create lessons
     if request.user.profile.role != 'teacher' or course.teacher != request.user:
-        messages.error(request, 'Not allowed')
+        messages.error(request, 'You are not allowed to add lessons to this course.')
         return redirect('courses:teacher_dashboard')
+
     if request.method == 'POST':
         form = LessonForm(request.POST)
         if form.is_valid():
             lesson = form.save(commit=False)
             lesson.course = course
             lesson.save()
-            messages.success(request, 'Lesson created.')
+            messages.success(request, f'Lesson "{lesson.title}" created for course "{course.title}".')
             return redirect('courses:teacher_dashboard')
     else:
         form = LessonForm()
+
     return render(request, 'courses/create_lesson.html', {'form': form, 'course': course})
-from django.shortcuts import render, get_object_or_404
-from .models import Lesson
+@login_required
+def create_course(request):
+    if request.user.profile.role != 'teacher':
+        messages.error(request, "Only teachers can create courses.")
+        return redirect('courses:student_dashboard')
+
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        course = Course.objects.create(
+            title=title,
+            description=description,
+            teacher=request.user  # 👈 assign the logged-in teacher
+        )
+        messages.success(request, f'Course "{course.title}" created successfully.')
+        return redirect('courses:teacher_dashboard')
+
+    return render(request, 'courses/create_course.html')
 
 @login_required
 def lesson_detail(request, lesson_id):
     lesson = get_object_or_404(Lesson, id=lesson_id)
     return render(request, 'courses/lesson_detail.html', {'lesson': lesson})
-
