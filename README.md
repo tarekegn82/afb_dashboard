@@ -56,12 +56,12 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
 git clone https://github.com/tarekegn82/afb_dashboard.git
 cd afb_dashboard
 ```
-2. **Create a virtual environment
+2. **Create a virtual environment**
 ```bash
 python -m venv .venv
 .\.venv\Scripts\activate
 ```
-3. **Start Project Setup
+3. **Start Project Setup**
 ```bash
 python manage.py makemigrations
 python manage.py migrate
