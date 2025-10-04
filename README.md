@@ -1,4 +1,4 @@
-# Learning Management System (LMS)
+# AFB Learning Management System (LMS)
 
 A full-featured Learning Management System built with **Django 5**, allowing teachers to create lessons and assessments, students to view lessons and submit quizzes, and administrators to manage users and content.
 
@@ -7,9 +7,7 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
 ## Table of Contents
 
 - [Features](#features)
-
-- [License](#license)
-
+- [Technologies](#technologies)
 ---
 
 ## Features
@@ -27,3 +25,26 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
   - User registration and login.
   - Profile roles (student/teacher) are automatically managed.
 
+- **Dashboard**
+  - Teacher dashboard: Shows created lessons and courses.
+  - Student dashboard: Shows enrolled courses and available lessons.
+
+- **Assessments**
+  - Create quizzes or assignments per course.
+  - Students can submit and view results.
+
+- **Responsive Design**
+  - Styled with light blue and purple themes.
+
+---
+
+## Technologies
+
+- Python 3.13
+- Django 5.2.7
+- SQLite (default database)
+- HTML, CSS (for front-end styling)
+- Django Template System
+- Django Messages Framework
+
+---
