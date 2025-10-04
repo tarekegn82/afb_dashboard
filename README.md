@@ -48,3 +48,21 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
 - Django Messages Framework
 
 ---
+## Installation
+
+1. **Clone the repository**
+```bash
+git clone <your-repo-url>
+cd afb_dashboard
+```
+2. **Create a virtual environment
+```bash
+python -m venv .venv
+.\.venv\Scripts\activate
+```
+3. **Start Project Setup
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+http://127.0.0.1:8000/
