@@ -53,7 +53,7 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/tarekegn82/afb_dashboard.git
 cd afb_dashboard
 ```
 2. **Create a virtual environment
