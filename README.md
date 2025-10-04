@@ -8,6 +8,7 @@ A full-featured Learning Management System built with **Django 5**, allowing tea
 
 - [Features](#features)
 - [Technologies](#technologies)
+- [Installation](#installation)
 ---
 
 ## Features
@@ -65,4 +66,5 @@ python -m venv .venv
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
+python manage.py runserver
 http://127.0.0.1:8000/
