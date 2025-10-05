@@ -10,13 +10,14 @@
             {% for lesson in lessons %}
                 <li>
                     <strong>{{ lesson.title }}</strong>
+                    - <a href="{% url 'courses:view_lesson' lesson.id %}">View Lesson</a>
                     {% if lesson.tests.exists %}
                         <ul>
                             {% for test in lesson.tests.all %}
-                                <ul>
+                                <li>
                                     {{ test.title }} - 
                                     <a href="{% url 'assessments:take_test' test.id %}">Take Test</a>
-                                </ul>
+                                </li>
                             {% endfor %}
                         </ul>
                     {% else %}

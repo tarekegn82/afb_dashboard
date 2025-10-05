@@ -87,6 +87,9 @@ def lesson_detail(request, lesson_id):
     tests = Test.objects.filter(lesson=lesson)
     return render(request, 'courses/lesson_detail.html', {'lesson': lesson, 'tests': tests})
 
+def view_lesson(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    return render(request, 'course/lesson_detail.html', {'lesson': lesson})
 
 # Optional placeholders for compatibility, can be removed if using assessments app directly
 @login_required
