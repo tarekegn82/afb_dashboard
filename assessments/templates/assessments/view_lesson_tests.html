@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Tests for Lesson: {{ lesson.title }}</h2>
+
+{% if tests %}
+    <ul>
+        {% for test in tests %}
+            <li>{{ test.title }} - Question: {{ test.question }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tests created for this lesson yet.</p>
+{% endif %}
+
+<a href="{% url 'courses:teacher_dashboard' %}">Back to Dashboard</a>
+{% endblock %}

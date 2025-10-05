@@ -4,8 +4,7 @@
 <p>{{ test.question }}</p>
 <form method="post">
   {% csrf_token %}
-  <label>Your answer:</label><br>
-  <input name="answer" required><br><br>
+  <input type="text" name="answer" placeholder="Your answer..." required>
   <button type="submit">Submit</button>
 </form>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create Test for {{ lesson.title }}</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>Title:</label><br>
+  <input type="text" name="title" required><br><br>
+
+  <label>Question:</label><br>
+  <textarea name="question" required></textarea><br><br>
+
+  <label>Correct Answer:</label><br>
+  <input type="text" name="correct_answer" required><br><br>
+
+  <button type="submit">Create Test</button>
+</form>
+{% endblock %}

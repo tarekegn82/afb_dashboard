@@ -4,18 +4,32 @@
     <h2>Student Dashboard</h2>
     <p>Welcome, {{ user.username }}!</p>
 
-    <h3>Available Lessons</h3>
+    <h3>Available Lessons & Tests</h3>
     {% if lessons %}
         <ul>
             {% for lesson in lessons %}
                 <li>
-                    <strong>{{ lesson.title }}</strong> - 
-                    <a href="{% url 'courses:lesson_detail' lesson.id %}">View</a>
+                    <strong>{{ lesson.title }}</strong>
+                    {% if lesson.tests.exists %}
+                        <ul>
+                            {% for test in lesson.tests.all %}
+                                <ul>
+                                    {{ test.title }} - 
+                                    <a href="{% url 'assessments:take_test' test.id %}">Take Test</a>
+                                </ul>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No tests available for this lesson yet.</em>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No lessons available at the moment.</p>
     {% endif %}
+
+    <h3>My Results</h3>
+    <a href="{% url 'assessments:results' %}">View My Results</a>
 </div>
 {% endblock %}

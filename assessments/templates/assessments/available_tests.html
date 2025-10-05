@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Available Tests</h2>
+<table border="1" cellpadding="6">
+  <thead>
+    <tr><th>Title</th><th>Lesson</th><th>Action</th></tr>
+  </thead>
+  <tbody>
+    {% for t in tests %}
+      <tr>
+        <td>{{ t.title }}</td>
+        <td>{{ t.lesson.title }}</td>
+        <td><a href="{% url 'assessments:take_test' t.id %}">Take Test</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3">No tests available</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
