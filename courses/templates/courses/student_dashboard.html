@@ -6,22 +6,24 @@
 
     <h3>Available Lessons & Tests</h3>
     {% if lessons %}
-        <ul>
+        <ul class="lessons-list">
             {% for lesson in lessons %}
-                <li>
-                    <strong>{{ lesson.title }}</strong>
-                    - <a href="{% url 'courses:view_lesson' lesson.id %}">View Lesson</a>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <strong>{{ lesson.title }}</strong>
+                        - <a href="{% url 'courses:view_lesson' lesson.id %}" class="button-small">View Lesson</a>
+                    </div>
                     {% if lesson.tests.exists %}
-                        <ul>
+                        <ul class="tests-list">
                             {% for test in lesson.tests.all %}
                                 <li>
                                     {{ test.title }} - 
-                                    <a href="{% url 'assessments:take_test' test.id %}">Take Test</a>
+                                    <a href="{% url 'assessments:take_test' test.id %}" class="button-small">Take Test</a>
                                 </li>
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <em>No tests available for this lesson yet.</em>
+                        <p class="no-tests"><em>No tests available for this lesson yet.</em></p>
                     {% endif %}
                 </li>
             {% endfor %}
@@ -31,6 +33,54 @@
     {% endif %}
 
     <h3>My Results</h3>
-    <a href="{% url 'assessments:results' %}">View My Results</a>
+    <a href="{% url 'assessments:results' %}" class="button">View My Results</a>
 </div>
+
+<style>
+/* Better spacing and responsive layout */
+.lessons-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.lesson-item {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #f8f8ff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.lesson-header {
+    margin-bottom: 8px;
+}
+
+.tests-list {
+    list-style: none;
+    padding-left: 15px;
+}
+
+.tests-list li {
+    margin-bottom: 5px;
+}
+
+.button-small {
+    background-color: #6a5acd;
+    color: white;
+    padding: 4px 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.button-small:hover {
+    background-color: #483d8b;
+}
+
+.no-tests {
+    margin-left: 10px;
+    color: #555;
+    font-style: italic;
+}
+</style>
 {% endblock %}
