@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 
 DEBUG = False
-ALLOWED_HOSTS = ['your-app-name.onrender.com']
+ALLOWED_HOSTS = ['afb-dashboard.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
