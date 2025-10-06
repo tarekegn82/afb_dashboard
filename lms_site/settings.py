@@ -2,7 +2,14 @@
 import os
 from pathlib import Path
 
+DEBUG = False
+ALLOWED_HOSTS = ['your-app-name.onrender.com']
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
 
 SECRET_KEY = 'replace-with-your-secret-key'
 DEBUG = True
