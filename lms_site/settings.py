@@ -13,8 +13,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 SECRET_KEY = 'replace-with-your-secret-key'
-DEBUG = True
-ALLOWED_HOSTS = []
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
