@@ -187,3 +187,7 @@ main::-webkit-scrollbar-thumb {
         font-size: 0.9rem;
     }
 }
+
+/* ============================
+   missing css on deployment
+============================ */
